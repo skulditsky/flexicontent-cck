@@ -166,22 +166,6 @@ JRequest::setVar('task', $controller_task);        // Compatibility for views st
 // also base controller should be auto-loaded by the view controller itself !
 // **************************************************************************
 
-// Base controller
-/*require_once (JPATH_COMPONENT.DS.'controller.php');
-
-// View specific controller
-if ($controller) {
-	$base_controller = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
-	
-	if ( file_exists($base_controller) ) {
-		require_once $base_controller;
-	} else {
-		$jinput->set('controller', $controller = '');
-		JRequest::setVar('controller', $controller = '');  // Compatibility for views still using JRequest
-	}
-}*/
-
-
 // initialization done ... log stats for initialization
 if ( $print_logging_info && $format=='html')
 	@$fc_run_times['initialize_component'] += round(1000000 * 10 * (microtime(true) - $start_microtime)) / 10;
@@ -267,29 +251,6 @@ if ( $cparams->get('default_menuitem_nopathway',1) )
 
 $view   = $jinput->get('view', '', 'cmd');  // Re-get view it may have changed
 $layout = $jinput->get('layout', '', 'string');
-if ( $format == 'html' )
-{
-	// Load mootools
-	//JHtml::_('behavior.framework', true);
-	
-	// Load jquery Framework, but let some views decide for themselves, so that they can choose not to load some parts of jQuery.ui JS
-	if ($view != 'item') flexicontent_html::loadFramework('jQuery');
-	
-	if ( $cparams->get('add_tooltips', 1) )
-	{
-		// J2.5 tooltips (mootools tooltips) 
-		//JHTML::_('behavior.tooltip');  // All uses of 'hasTip' were replaced with 'hasTooltip'
-		
-		// J3.0+ tooltips (bootstrap based)
-		if (FLEXI_J30GE) JHtml::_('bootstrap.tooltip');
-	}
-	// Add flexi-lib JS
-	//JFactory::getDocument()->addScriptVersion( JURI::root(true).'/components/com_flexicontent/assets/js/flexi-lib.js', FLEXI_VHASH );  // Frontend/backend script
-	
-	// Load bootstrap CSS
-	if ( $cparams->get('loadfw_bootstrap_css', 2)==1 )
-		JHtml::_('bootstrap.loadCss', true);
-}
 
 
 
